@@ -38,8 +38,14 @@ export class PostsController {
   }
 
   @Patch(":id")
-  update(@Param("id") id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  @Auth()
+  update(
+    @Param("id", ParseUUIDPipe) id: string,
+    @Body() updatePostDto: UpdatePostDto,
+    @GetUser() user: User
+  ) {
+    console.log(user);
+    return this.postsService.update(id, updatePostDto, user);
   }
 
   @Delete(":id")

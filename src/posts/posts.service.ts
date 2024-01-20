@@ -53,7 +53,17 @@ export class PostsService {
     return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
+  async update(id: string, updatePostDto: UpdatePostDto, user: User) {
+    try {
+      const post = await this.postRepository.preload({ id, ...updatePostDto });
+      if (!post) throw new NotFoundException(`Post with id: ${id} not found`);
+      post.author = user;
+      await this.postRepository.save(post);
+      return post;
+    } catch (error) {
+      this.handleException(error);
+    }
+
     return `This action updates a #${id} post`;
   }
 
