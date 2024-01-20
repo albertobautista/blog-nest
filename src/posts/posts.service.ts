@@ -2,6 +2,7 @@ import {
   BadGatewayException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from "@nestjs/common";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
@@ -44,8 +45,12 @@ export class PostsService {
     return posts;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: string) {
+    const post = await this.postRepository.findOneBy({ id });
+
+    if (!post) throw new NotFoundException(`Post with ID: ${id} not found`);
+
+    return post;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
