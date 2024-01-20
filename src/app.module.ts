@@ -3,7 +3,8 @@ import { ConfigModule } from "@nestjs/config";
 
 import { AuthModule } from "./auth/auth.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { PostsModule } from './posts/posts.module';
+import { PostsModule } from "./posts/posts.module";
+import { CommonModule } from "./common/common.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PostsModule } from './posts/posts.module';
     }),
     AuthModule,
     PostsModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
