@@ -67,8 +67,12 @@ export class PostsService {
     return `This action updates a #${id} post`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: string) {
+    const post = await this.postRepository.findOneBy({ id });
+    console.log(post);
+    if (!post) throw new NotFoundException(`Post with id: ${id} not found`);
+    await this.postRepository.remove(post);
+    return `Post with id: ${id} removed`;
   }
 
   private handleException(error: any) {
