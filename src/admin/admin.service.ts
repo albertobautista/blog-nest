@@ -4,12 +4,15 @@ import { AuthService } from "src/auth/auth.service";
 import { Repository } from "typeorm";
 import { User } from "src/auth/entities/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Post } from "src/posts/entities/post.entity";
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(Post)
+    private readonly postsRepository: Repository<Post>
   ) {}
 
   async findAllUsers() {
@@ -25,5 +28,10 @@ export class AdminService {
     await this.userRepository.remove(user);
 
     return `User with id: ${id} removed`;
+  }
+
+  async findAllPosts() {
+    const posts = await this.postsRepository.find();
+    return posts;
   }
 }

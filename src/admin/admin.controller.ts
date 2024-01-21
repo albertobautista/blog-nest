@@ -6,12 +6,17 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get("users")
-  findAll() {
+  findAllUsers() {
     return this.adminService.findAllUsers();
   }
 
   @Delete("users/:id")
   removeUser(@Param("id", ParseUUIDPipe) id: string) {
     return this.adminService.removeUser(id);
+  }
+
+  @Get("posts")
+  findAllPosts() {
+    return this.adminService.findAllPosts();
   }
 }
