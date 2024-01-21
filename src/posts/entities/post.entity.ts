@@ -19,6 +19,9 @@ export class Post {
   })
   categories: string[];
 
-  @ManyToOne(() => User, (user) => user.post, { eager: true })
+  @ManyToOne(() => User, (user) => user.post, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   author: User;
 }
