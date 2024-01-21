@@ -52,4 +52,9 @@ export class PostsController {
   remove(@Param("id", ParseUUIDPipe) id: string) {
     return this.postsService.remove(id);
   }
+
+  @Get("user/:userId")
+  findPostsByUser(@Param("userId", ParseUUIDPipe) userId: string) {
+    return this.postsService.findPostsByUser(userId);
+  }
 }

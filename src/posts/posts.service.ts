@@ -74,6 +74,13 @@ export class PostsService {
     await this.postRepository.remove(post);
     return `Post with id: ${id} removed`;
   }
+  async findPostsByUser(userId: string) {
+    const posts = await this.postRepository.find({
+      where: { author: { id: userId } },
+    });
+
+    return posts;
+  }
 
   private handleException(error: any) {
     if (error.code === "23505") throw new BadGatewayException(error.detail);
