@@ -32,8 +32,9 @@ export class AuthService {
       });
 
       await this.userRepository.save(newUser);
+      delete newUser.password;
 
-      return { ...newUser, token: this.getJwtToken({ id: newUser.id }) };
+      return newUser;
     } catch (error) {
       this.handleDBErrors(error);
     }
