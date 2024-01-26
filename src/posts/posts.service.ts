@@ -82,6 +82,20 @@ export class PostsService {
     return posts;
   }
 
+  async searchPostsByTerm(paginationDto: PaginationDto, term: string) {
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    const posts = await this.postRepository
+      .createQueryBuilder("post")
+      .where("post.title ILIKE :term", { term: `%${term}%` })
+      .orWhere("post.content ILIKE :term", { term: `%${term}%` })
+      .skip(offset)
+      .take(limit)
+      .getMany();
+
+    return posts;
+  }
+
   private handleException(error: any) {
     if (error.code === "23505") throw new BadGatewayException(error.detail);
     // this.logger.error(error);

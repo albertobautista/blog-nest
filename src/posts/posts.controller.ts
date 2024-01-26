@@ -57,4 +57,12 @@ export class PostsController {
   findPostsByUser(@Param("userId", ParseUUIDPipe) userId: string) {
     return this.postsService.findPostsByUser(userId);
   }
+
+  @Get("search/:term")
+  searchPorductsByTerm(
+    @Query() paginationDto: PaginationDto,
+    @Param("term") term: string
+  ) {
+    return this.postsService.searchPostsByTerm(paginationDto, term);
+  }
 }
