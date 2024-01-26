@@ -28,6 +28,11 @@ export class AuthController {
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.loginUser(loginUserDto);
   }
+
+  @Get("users")
+  findAllUsers() {
+    return this.authService.findAllUsers();
+  }
   @Get(":id")
   findOne(@Param("id", ParseUUIDPipe) id: string) {
     return this.authService.findUser(id);

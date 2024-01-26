@@ -55,6 +55,14 @@ export class AuthService {
 
     return { ...user, token: this.getJwtToken({ id: user.id }) };
   }
+
+  async findAllUsers() {
+    const users = await this.userRepository.find();
+    return users.map((user) => {
+      delete user.password;
+      return user;
+    });
+  }
   async findUser(id: string) {
     let user: User;
 
