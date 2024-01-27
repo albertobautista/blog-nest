@@ -8,7 +8,7 @@ import {
 import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
 import { User } from "../entities/user.entity";
-import { META_ROLES } from "../dto/decorators/role-protected.decorator";
+import { META_ROLE } from "../dto/decorators/role-protected.decorator";
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {
@@ -18,24 +18,21 @@ export class UserRoleGuard implements CanActivate {
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     // Get the metadata roles array
-    const validRoles: string[] = this.reflector.get<string[]>(
-      META_ROLES,
+    const isAdminRole: boolean = this.reflector.get<boolean>(
+      META_ROLE,
       context.getHandler()
     );
 
-    if (!validRoles) return true;
-    if (validRoles.length === 0) return true;
+    if (!isAdminRole) return true;
 
     const req = context.switchToHttp().getRequest();
     const user = req.user as User;
 
     if (!user) throw new BadRequestException("User not found");
 
-    console.log(user);
-    // for (const role of user.roles) {
-    //   if (validRoles.includes(role)) return true;
-    // }
-    return true;
+    if (isAdminRole) {
+      if (user.isAdmin) return true;
+    }
 
     throw new ForbiddenException(
       "You do not have permission to access this resource"
