@@ -12,8 +12,8 @@ import { AuthService } from "./auth.service";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
-import { GetUser } from "./dto/decorators/get-user.decorator";
-import { User } from "./entities/user.entity";
+import { Auth } from "./dto/decorators/auth.decorator";
+import { SameUser } from "./dto/decorators/same-user.decorator";
 
 @Controller("auth")
 export class AuthController {
@@ -38,7 +38,8 @@ export class AuthController {
     return this.authService.findUser(id);
   }
   @Patch(":id")
-  // @Auth(ValidRoles.admin)
+  @Auth({ isAdmin: true })
+  @SameUser()
   update(
     @Param("id", ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto
