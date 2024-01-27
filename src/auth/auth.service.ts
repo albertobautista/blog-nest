@@ -75,8 +75,6 @@ export class AuthService {
 
   async updateUser(id: string, updateUserDto: UpdateUserDto) {
     try {
-      console.log(id, updateUserDto);
-
       const { password, ...toUpdate } = updateUserDto;
 
       const user = await this.userRepository.preload({ id, ...toUpdate });
