@@ -94,6 +94,10 @@ export class AuthService {
     const product = await this.findUser(id);
 
     await this.userRepository.remove(product);
+
+    return {
+      message: `Product with id: ${id} deleted successfully`,
+    };
   }
 
   private getJwtToken(payload: JwtPayload) {

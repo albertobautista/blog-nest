@@ -48,7 +48,7 @@ export class AuthController {
   }
 
   @Delete(":id")
-  // @Auth(ValidRoles.admin)
+  @Auth({ isAdmin: true })
   remove(@Param("id", ParseUUIDPipe) id: string) {
     return this.authService.deleteUser(id);
   }
