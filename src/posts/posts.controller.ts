@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseUUIDPipe,
+  Put,
 } from "@nestjs/common";
 import { PostsService } from "./posts.service";
 import { CreatePostDto } from "./dto/create-post.dto";
@@ -16,13 +17,14 @@ import { GetUser } from "src/auth/dto/decorators/get-user.decorator";
 import { User } from "src/auth/entities/user.entity";
 import { Auth } from "src/auth/dto/decorators/auth.decorator";
 import { PaginationDto } from "src/common/dto/pagination.dto";
+// import { SameAuthor } from "../auth/dto/decorators/same-author.decorator";
 
 @Controller("posts")
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  @Auth()
+  @Auth({ isAdmin: false })
   create(@Body() createPostDto: CreatePostDto, @GetUser() user: User) {
     return this.postsService.createPost(createPostDto, user);
   }
@@ -37,8 +39,8 @@ export class PostsController {
     return this.postsService.findOne(id);
   }
 
-  @Patch(":id")
-  @Auth()
+  @Put(":id")
+  @Auth({ isAdmin: true })
   update(
     @Param("id", ParseUUIDPipe) id: string,
     @Body() updatePostDto: UpdatePostDto,
@@ -49,6 +51,7 @@ export class PostsController {
   }
 
   @Delete(":id")
+  @Auth({ isAdmin: true })
   remove(@Param("id", ParseUUIDPipe) id: string) {
     return this.postsService.remove(id);
   }
