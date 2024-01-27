@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   ParseUUIDPipe,
+  Put,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -37,7 +37,7 @@ export class AuthController {
   findOne(@Param("id", ParseUUIDPipe) id: string) {
     return this.authService.findUser(id);
   }
-  @Patch(":id")
+  @Put(":id")
   @Auth({ isAdmin: true })
   @SameUser()
   update(
