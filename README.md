@@ -2,72 +2,53 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# NestJS Blog API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Welcome to the documentation for the NestJS Blog API! This API provides endpoints to manage users, posts, search and filtering functionalities, as well as administrative tasks on our blogging platform.
 
-## Description
+## Endpoints
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Users
 
-## Installation
+- **`POST /users`**: Register new users. Each user must have a username, password, and a boolean isAdmin field.
+- **`POST /users/login`**: User login.
+- **`GET /users`**: List all users.
+- **`GET /users/{id}`**: Get details of a specific user.
+- **`PUT /users/{id}`**: Update a specific user (only their own profile or if they are an administrator).
+- **`DELETE /users/{id}`**: Delete a user (only administrators).
 
-```bash
-$ npm install
-```
+### Posts
 
-## Running the app
+- **`POST /posts`**: Create a new post (only registered users). Posts will have an id, title, author, content, and an array of categories.
+- **`GET /posts`**: List all posts. Supports parameters for pagination (default results per page if no param is provided is 10).
+- **`GET /posts/{id}`**: View details of a specific post.
+- **`PUT /posts/{id}`**: Update a post (only the author or administrators).
+- **`DELETE /posts/{id}`**: Delete a post (only the author or administrators).
+- **`GET /posts/user/{userId}`**: View all posts of a specific user.
 
-```bash
-# development
-$ npm run start
+### Search and Filtering
 
-# watch mode
-$ npm run start:dev
+- **`GET /posts/search`**: Search posts by title, content, etc. Supports parameters for pagination (default results per page if no param is provided is 10).
+- **`GET /posts/filter`**: Additional endpoints to filter posts by category or author.
 
-# production mode
-$ npm run start:prod
-```
+### Administration
 
-## Test
+- **`GET /admin/users`**: Get all users (only administrators).
+- **`DELETE /admin/users/{id}`**: Delete users (only administrators).
+- **`GET /admin/posts`**: Get all posts with moderation options (delete or edit) (only administrators).
 
-```bash
-# unit tests
-$ npm run test
+## Authentication
 
-# e2e tests
-$ npm run test:e2e
+This API utilizes token-based authentication. To access protected endpoints, provide a valid access token in the authorization header of the request.
 
-# test coverage
-$ npm run test:cov
-```
+## Response Formats
 
-## Support
+The API uses consistent response formats to provide clear and coherent data structures across all responses. Refer to the detailed documentation of each endpoint for information on specific response formats.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Get Started
 
-## Stay in touch
+Feel free to explore and interact with our blogging platform using the provided endpoints. Happy blogging!
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Developed by
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+This project was developed by [Alberto Bautista](https://www.linkedin.com/in/albertobautistac/).
