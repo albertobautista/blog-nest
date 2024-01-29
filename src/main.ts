@@ -15,9 +15,11 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle("Blog RESTful API")
-    .setDescription("Blog endpoints")
-    .setVersion("1.0")
+    .setTitle("Blog RESTful API - Final Project")
+    .setDescription(
+      "Welcome to the API documentation for our blog application! This API provides endpoints to manage posts, users and admin resources. Utilize the resources and endpoints outlined below to interact with our platform securely and efficiently."
+    )
+    .setVersion("1.1")
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
